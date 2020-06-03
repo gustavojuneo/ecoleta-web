@@ -41,6 +41,8 @@ const CreatePoint = () => {
   const [selectedCity, setSelectedCity] = useState('0');
   const [selectedItems, setSelectedItems] = useState<number[]>([]);
   const [selectedPosition, setSelectedPosition] = useState<[number, number]>([0, 0]);
+  
+  const [sucessMessage, setSucessMessage] = useState(false);
 
   const history = useHistory();
 
@@ -140,6 +142,11 @@ const CreatePoint = () => {
     };
 
     await api.post('points', data);
+
+    setSucessMessage(true);
+    setInterval(() => {
+      history.push('/');
+    }, 2000)
   }
 
   return (
@@ -262,6 +269,13 @@ const CreatePoint = () => {
 
         <button type="submit">Cadastrar ponto de coleta</button>
       </form>
+      
+      {sucessMessage ? (
+        <div className={`sucess-message ${sucessMessage ? "show" : ""}`}>
+          <FiCheckCircle size={64} />
+          <h1>Cadastro concluído!</h1>
+        </div>
+      ) : null}
     </div>
   );
 }
